@@ -1,17 +1,17 @@
 <template>
   <a-form layout="inline">
-    <a-form-item label="type">
+    <a-form-item>
       <a-radio-group
-        v-model:value="type"
+        :value="modelValue"
         size="small"
-        @change="({ target: { value } }) => changeType(value)"
+        @change="({ target: { value } }) => changeComponent(value)"
       >
-        <a-radio-button v-for="item of types" :key="item" :value="item">{{
-          item
-        }}</a-radio-button>
+        <a-radio-button v-for="item of types" :key="item" :value="item">
+          {{ item }}
+        </a-radio-button>
       </a-radio-group>
     </a-form-item>
-    <a-form-item v-if="type === 'entities'" label="components">
+    <!-- <a-form-item v-if="type === 'entities'" label="components">
       <a-radio-group
         :value="modelValue"
         size="small"
@@ -35,13 +35,15 @@
           >{{ item }}</a-radio-button
         >
       </a-radio-group>
-    </a-form-item>
+    </a-form-item> -->
   </a-form>
 </template>
 
 <script lang="ts">
 // dependencies
 import { defineComponent, ref } from "vue";
+// constants
+import examples from "@/constants/examples";
 
 export default defineComponent({
   name: "QueryForm",
@@ -50,31 +52,31 @@ export default defineComponent({
   emits: ["update:modelValue", "change"],
 
   setup(props, { emit }) {
-    const types = ["entities", "plugins"];
-    const entities = ["services", "routes", "consumers"];
-    const plugins = ["jwt", "basic-auth"];
-    const type = ref("entities");
+    const types = Object.keys(examples);
+    // const entities = ["services", "routes", "consumers"];
+    // const plugins = ["jwt", "basic-auth"];
+    // const type = ref("services");
 
     // methods
-    const changeType = (value) => {
-      value === "entities"
-        ? changeComponent(entities[0])
-        : value === "plugins"
-        ? changeComponent(`plugins/${plugins[0]}`)
-        : null;
-    };
-    const changeComponent = (value) => {
-      emit("update:modelValue", value);
-      emit("change", value);
+    // const changeType = (value) => {
+    //   value === "entities"
+    //     ? changeComponent(entities[0])
+    //     : value === "plugins"
+    //     ? changeComponent(`plugins/${plugins[0]}`)
+    //     : null;
+    // };
+    const changeComponent = (key) => {
+      emit("update:modelValue", key);
+      emit("change", key);
     };
 
     return {
       types,
-      entities,
-      plugins,
-      type,
+      // entities,
+      // plugins,
+      // type,
       // methhos
-      changeType,
+      // changeType,
       changeComponent,
     };
   },

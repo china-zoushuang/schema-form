@@ -33,14 +33,9 @@
 
 ## Preretirement
 
-- [x] [Install Docker](https://docs.docker.com/desktop/install/mac-install/)
-- [x] [Install Kong Gateway on Docker](https://docs.konghq.com/gateway/3.0.x/install/docker/)
-  - Kong Dashboard http://localhost:8002/
-  - Kong Admin Api http://localhost:8001/
 - [x] Install Node.js version 16.0 or higher
 
 ## Start
-Node.js 16+
 - [x] npm install
 - [x] npm run dev
 

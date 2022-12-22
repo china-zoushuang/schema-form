@@ -59,15 +59,17 @@
 <script>
 // dependencies
 import { defineComponent, ref, onMounted } from "vue";
-import { notification } from "ant-design-vue";
+// import { notification } from "ant-design-vue";
 // components
 import QueryForm from "@/components/QueryForm.vue";
 import MonacoEditor from "@/components/MonacoEditor.vue";
 import SchemaForm from "@/components/SchemaForm.vue";
 // utils
-import service from "@/utils/service";
+// import service from "@/utils/service";
 import { generateModel, generateUI } from "@/utils/methods";
 
+// constants
+import examples from "@/constants/examples";
 export default defineComponent({
   name: "IndexView",
 
@@ -79,7 +81,7 @@ export default defineComponent({
 
   setup() {
     const component = ref("services");
-    const schema = ref("{ fields: [] }");
+    const schema = ref("{}");
     const model = ref("{}");
     const UISchema = ref("{}");
     const isEditingSchema = ref(false);
@@ -98,20 +100,23 @@ export default defineComponent({
     };
 
     const query = () => {
-      service({
-        url: `/schemas/${component.value}`,
-        method: "get",
-      })
-        .then((res) => {
-          schema.value = JSON.stringify(res, null, "  ");
-          changeSchema(schema.value);
-        })
-        .catch((err) => {
-          notification.error({
-            message: err.code,
-            description: err.message,
-          });
-        });
+      const value = examples[component.value];
+      schema.value = JSON.stringify(value, null, "  ");
+      changeSchema(schema.value);
+      // service({
+      //   url: `/schemas/${component.value}`,
+      //   method: "get",
+      // })
+      //   .then((res) => {
+      //     schema.value = JSON.stringify(res, null, "  ");
+      //     changeSchema(schema.value);
+      //   })
+      //   .catch((err) => {
+      //     notification.error({
+      //       message: err.code,
+      //       description: err.message,
+      //     });
+      //   });
     };
 
     const changeModel = (value) => {
